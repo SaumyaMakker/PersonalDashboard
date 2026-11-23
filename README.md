@@ -1,38 +1,37 @@
-# Project 30+ Dashboard — Cloud Sync Edition Personal
+# Project 30+ — Interview Sprint Dashboard (v4)
+
+This release replaces the beginner-first preparation sequence with an experienced-engineer, 8-week interview sprint targeting both SDE-2 and Senior Software Engineer roles, with full coverage.
 
 ## What changed
-- Preserves the existing mobile-first dashboard, 35 Java kit topics, mapped interview questions, study blocks, project lab, job pipeline, roadmap, notes, checklists and JSON backup/restore.
-- Adds Google sign-in through Firebase Authentication.
-- Adds per-user cloud storage in Cloud Firestore. The document path is `users/{uid}/apps/project30`.
-- Local progress continues to save immediately. When signed in, changes are debounced and synced to Firestore; incoming changes from another device update the dashboard.
-- Firestore browser persistence is enabled where supported. Local JSON export remains available as an independent backup.
+- Weeks 1–7 schedule all 35 original InterviewKit topic lessons (five topic-days per week). Week 8 is dedicated to mock interviews, weak-area remediation and company-specific preparation.
+- Three daily study blocks remain: 12:00–1:00 PM, 3:30–4:30 PM and 5:30–6:30 PM.
+- Each day emphasizes advanced explanation, implementation/SQL/design practice, and exact mapped question prompts from the source kit.
+- The dashboard includes all 37 original chapter Markdown files and their original Q&A wording.
+- The 53 source-index questions that were not mapped to a topic are retained in a separate explorer section.
+- System-design HLD/LLD and frontend/full-stack exercises are labelled as additional supplements; they are not represented as InterviewKit source material.
+- Existing local progress, notes, job tracker and Firebase Google sign-in / Firestore cloud-sync code are retained.
 
-## Important: Firebase setup is required before cloud sync works
-The dashboard is still a static site and can be hosted on GitHub Pages. Cloud sync requires your own Firebase project. No Firebase project credentials have been supplied yet, so the integration is included but is not connected or live until you complete these steps.
+## Source inventory and fidelity
+The uploaded archive's `work/topics/` contains 35 topic-wise lessons; `work/md/` contains 37 source chapters; `work/index/ALL.txt` contains 1,520 index items. The dashboard retains the original topic-question mappings and adds the 53 items listed by the source status file as not linked to a topic. Original chapter markdown and topic markdown are embedded from the supplied ZIP.
 
-1. In Firebase Console, create a project.
-2. Register a **Web app** and copy its Firebase config.
-3. In **Authentication → Sign-in method**, enable **Google**.
-4. In **Authentication → Settings → Authorized domains**, add your GitHub Pages hostname (for example, `YOUR_GITHUB_USERNAME.github.io`). Also add `localhost` if testing locally.
-5. Create a **Cloud Firestore** database.
-6. Open Firestore Rules and publish the contents of `firestore.rules` from this ZIP.
-7. Open the dashboard → Backup & Settings → Cloud sync. Paste `apiKey`, `authDomain`, `projectId`, and `appId` from the Firebase Web app config. Sender ID and storage bucket are optional for this dashboard.
-8. Select **Save configuration**, then **Continue with Google**.
-9. Open the same GitHub Pages URL on another device, enter the same Firebase Web app config, and sign in with the same Google account.
+The source archive's status file reports 1,456 completed question explanations and notes two duplicate source questions. These counts describe the source archive's explanation work, not a count of unique mapped question IDs.
 
-## Firestore security rules
-The supplied `firestore.rules` restrict each signed-in user to their own document. Do not use permissive test rules such as `allow read, write: if true`.
+## Run locally
+Open `index.html` in a modern browser. For Google sign-in and Firestore sync, host on HTTPS (for example GitHub Pages) and complete the Firebase setup below.
 
-## Configuration and privacy
-- Firebase web config values are public client configuration; they are not a substitute for security rules. Do not put service-account private keys or Admin SDK credentials in this page.
-- Each user's progress is stored under their Firebase Authentication UID. Other signed-in users cannot read that user's document under the supplied rules.
-- The dashboard still keeps a local copy in browser storage and offers JSON export/import.
-- GitHub Pages hosts the HTML; Firebase provides authentication and database services.
-- The dashboard does not require or use a custom server.
+## Firebase setup
+1. Create a Firebase project and register a Web app.
+2. Enable Authentication → Sign-in method → Google.
+3. Create a Cloud Firestore database.
+4. Add your GitHub Pages hostname (for example `saumyamakker.github.io`) under Authentication → Settings → Authorized domains.
+5. Publish `firestore.rules` in Firestore Rules. These rules restrict each signed-in user to their own `users/{uid}/apps/{appId}` document.
+6. Open dashboard Settings, enter the Firebase Web app config and sign in with Google.
+7. Sign in with the same Google account on each device.
 
-## Deploy to GitHub Pages
-Upload `index.html` to the repository root (and optionally `README.md` and `firestore.rules`). Enable Pages from `main` / `/(root)`. Add the resulting `github.io` hostname to Firebase Authentication's authorised domains.
+Firebase web config is client-side configuration, not a service-account secret. Do not put service-account keys or private credentials in the HTML. Keep the Firestore rules enabled.
 
-## Notes
-- Cloud sync requires an internet connection. Local progress remains usable offline and syncs when online.
-- On the first Google sign-in, if no cloud document exists, the current browser's local progress is uploaded. If a cloud document already exists, that cloud copy becomes the active copy on that device. Export a JSON backup before first connecting if you have important local-only progress.
+## GitHub Pages
+Upload `index.html`, `README.md` and `firestore.rules` to the repository root. In Settings → Pages, choose Deploy from a branch, `main`, `/(root)`, then Save.
+
+## Progress safety
+Progress is local-first. Export a JSON backup from Settings before connecting a cloud document for the first time. The dashboard keeps the existing storage schema and cloud-sync logic; cloud authentication/synchronization still requires your own Firebase project configuration and has not been verified against your Firebase project.
