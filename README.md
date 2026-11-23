@@ -1,4 +1,4 @@
-# Project 30+ Dashboard — Cloud Sync Edition
+# Project 30+ Dashboard — Cloud Sync Edition Personal
 
 ## What changed
 - Preserves the existing mobile-first dashboard, 35 Java kit topics, mapped interview questions, study blocks, project lab, job pipeline, roadmap, notes, checklists and JSON backup/restore.
